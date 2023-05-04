@@ -1,32 +1,75 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
-import { useState } from 'react'
+import Image from "next/image";
+import { Inter } from "next/font/google";
+import { useState } from "react";
+import { ImCross } from "react-icons/im";
+import { CgShapeCircle } from "react-icons/cg";
+import clsx from "clsx";
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+  const initialValues = [
+    { value: "" },
+    { value: "" },
+    { value: "" },
+    { value: "" },
+    { value: "" },
+    { value: "" },
+    { value: "" },
+    { value: "" },
+    { value: "" },
+  ];
+  const [containerState, setContainerState] = useState(initialValues);
+  const [currentPlayer, setCurrentPlayer] = useState("x");
 
-   const initialValues = [{value:""},{value:""},{value:""},{value:""},{value:""},{value:""},{value:""},{value:""},{value:""}]
+  function handleBoxClick() {
+    if (currentPlayer === "x") setCurrentPlayer("o");
+    else if (currentPlayer === "o") setCurrentPlayer("x");
+  }
 
-   const [containerState, setContainerState] = useState(initialValues);
+  return (
+    <main className=" flex flex-col justify-center bg-white h-screen w-full items-center gap-2">
+      <p
+        className="w-52 h-10
+ text-lime-950 text-3xl font-bold font-serif rounded-lg  text-center items-center"
+      >
+        Tik-Tak-To
+      </p>
+      <div className="grid grid-cols-3 justify-center w-96 bg-blue-100 h-96 items-center gap-2 p-4 rounded-xl shadow-2xl">
+        {initialValues.map((link) => (
+          <button
+            onClick={handleBoxClick}
+            className="h-28 w-full rounded-lg bg-white focus:bg-slate-400 focus:outline shadow-lg"
+          >
+            {" "}
+          </button>
+        ))}
+      </div>
+      <div className="grid grid-cols-2  rounded-md p-2 w-40 gap-4  gap h-14 items-center ">
+        <p
+          className={clsx(
+            "  h-10 rounded-xl flex items-center justify-center",
+            currentPlayer === "x" ? "bg-gray-400" : "bg-white"
+          )}
+        >
+          <ImCross />
+        </p>
+        <p
+          className={clsx(
+            "  h-10 rounded-xl flex items-center justify-center ",
+            currentPlayer === "o" ? "bg-gray-400" : "bg-white"
+          )}
+        >
+          <CgShapeCircle className="h-8 w-8" />
+        </p>
+      </div>
 
-   return (
-    <main className=' flex flex-col justify-center bg-green-400 h-screen w-full items-center gap-4'>
-
-      <div className='grid grid-cols-3 justify-center w-96 bg-blue-400 h-96 items-center gap-2 p-4'>
-      {initialValues.map(link =>
-        <button className='h-20 w-full rounded-lg bg-black'> </button>
-        )}
-        </div>
-        <div className='grid grid-cols-2 bg-black w-96  gap- justify-center'>
-          <p className=' bg-gray-400 h-10 rounded-xl w-20 text-center '>1</p>
-          <p className='w-20 bg-gray-400 h-10 rounded-3xl  text-center'>2</p>
-        </div>
-
-        <button className='w-40 h-10
-bg-red-500 rounded-lg      '>Reset</button>
-
-
+      <button
+        className="w-52 h-12
+bg-lime-950 text-white font-bold font-serif rounded-lg   focus:outline focus:outline-white focus:order-2 focus:bg-gray-400 "
+      >
+        Reset
+      </button>
     </main>
-  )
+  );
 }
